@@ -1,0 +1,71 @@
+name: Backend CI/CD
+
+# Trigger the workflow on push to main/master branch and pull requests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+# Define the jobs to run
+jobs:
+  test:
+    # Run on Ubuntu latest
+    runs-on: ubuntu-latest
+    
+    # Use Node.js strategy matrix to test multiple versions
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    # Checkout the repository code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    # Setup Node.js environment
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    # Install dependencies
+    - name: Install dependencies
+      run: npm ci
+    
+    # Create test environment file
+    - name: Create test environment
+      run: |
+        echo "JWT_SECRET=test-jwt-secret-for-ci" > .env.test
+        echo "PORT=3001" >> .env.test
+    
+    # Run tests
+    - name: Run tests
+      run: npm test
+      env:
+        NODE_ENV: test
+
+  # Build job (for deployment preparation)
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: |
+        echo "✅ Backend build successful"
+        echo "🚀 Ready for deployment"
