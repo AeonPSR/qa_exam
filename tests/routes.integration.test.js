@@ -3,10 +3,10 @@ const app = require('../server');
 
 describe('API Routes - Integration Tests', () => {
 
-  describe('GET /health', () => {
+  describe('GET /api/health', () => {
     it('should return server status', async () => {
       const response = await request(app)
-        .get('/health')
+        .get('/api/health')
         .expect(200);
 
       expect(response.body).toHaveProperty('status', 'OK');
@@ -14,7 +14,7 @@ describe('API Routes - Integration Tests', () => {
     });
   });
 
-  describe('POST /register', () => {
+  describe('POST /api/register', () => {
     it('should create a new user', async () => {
       const newUser = {
         email: 'newuser@example.com',
@@ -22,7 +22,7 @@ describe('API Routes - Integration Tests', () => {
       };
 
       const response = await request(app)
-        .post('/register')
+        .post('/api/register')
         .send(newUser)
         .expect(201);
 
@@ -39,13 +39,13 @@ describe('API Routes - Integration Tests', () => {
 
       // Create user first time
       await request(app)
-        .post('/register')
+        .post('/api/register')
         .send(user)
         .expect(201);
 
       // Try to create same user again
       const response = await request(app)
-        .post('/register')
+        .post('/api/register')
         .send(user)
         .expect(409);
 
@@ -78,7 +78,7 @@ describe('API Routes - Integration Tests', () => {
   describe('CORS Headers', () => {
     it('should include CORS headers in response', async () => {
       const response = await request(app)
-        .get('/health')
+        .get('/api/health')
         .expect(200);
 
       expect(response.headers).toHaveProperty('access-control-allow-origin', '*');
@@ -86,7 +86,7 @@ describe('API Routes - Integration Tests', () => {
 
     it('should handle OPTIONS preflight requests', async () => {
       const response = await request(app)
-        .options('/login')
+        .options('/api/login')
         .expect(200);
     });
   });

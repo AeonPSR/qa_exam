@@ -1,32 +1,33 @@
 const authService = require('../services/authService');
-const User = require('../models/User');
+const TestHelpers = require('./helpers/testHelpers');
+const { testUsers } = require('./fixtures/testData');
 
 describe('AuthService - Unit Tests', () => {
-  
-  const testUser = {
-    email: 'test@example.com',
-    password: 'password123'
-  };
 
   beforeEach(async () => {
-    // Create a test user before each test
-    const user = new User(testUser);
-    await user.save();
+    // Create a test user before each test using helper
+    await TestHelpers.createTestUser(testUsers.validUser);
   });
 
   describe('🔐 authenticateUser()', () => {
     it('should return success and token for valid credentials', async () => {
-      const result = await authService.authenticateUser(testUser.email, testUser.password);
+      const result = await authService.authenticateUser(
+        testUsers.validUser.email, 
+        testUsers.validUser.password
+      );
       
       expect(result.success).toBe(true);
       expect(result.token).toBeDefined();
-      expect(result.user).toHaveProperty('email', testUser.email);
+      expect(result.user).toHaveProperty('email', testUsers.validUser.email);
       expect(result.user).toHaveProperty('id');
       expect(result.user).not.toHaveProperty('password');
     });
 
     it('should return error for invalid password', async () => {
-      const result = await authService.authenticateUser(testUser.email, 'wrongpassword');
+      const result = await authService.authenticateUser(
+        testUsers.validUser.email, 
+        'wrongpassword'
+      );
       
       expect(result.success).toBe(false);
       expect(result.error).toBe('INVALID_PASSWORD');
@@ -35,7 +36,10 @@ describe('AuthService - Unit Tests', () => {
     });
 
     it('should return error for unknown email', async () => {
-      const result = await authService.authenticateUser('unknown@example.com', testUser.password);
+      const result = await authService.authenticateUser(
+        'unknown@example.com', 
+        testUsers.validUser.password
+      );
       
       expect(result.success).toBe(false);
       expect(result.error).toBe('EMAIL_NOT_FOUND');
@@ -57,21 +61,25 @@ describe('AuthService - Unit Tests', () => {
 
   describe('👤 createUser()', () => {
     it('should create a new user successfully', async () => {
-      const newUser = {
-        email: 'newuser@example.com',
+      const uniqueEmail = TestHelpers.generateUniqueEmail('newuser');
+      const newUserData = {
+        email: uniqueEmail,
         password: 'newpassword123'
       };
 
-      const result = await authService.createUser(newUser.email, newUser.password);
+      const result = await authService.createUser(newUserData.email, newUserData.password);
       
       expect(result.success).toBe(true);
-      expect(result.user).toHaveProperty('email', newUser.email);
+      expect(result.user).toHaveProperty('email', newUserData.email);
       expect(result.user).toHaveProperty('id');
       expect(result.user).not.toHaveProperty('password');
     });
 
     it('should return error for existing user', async () => {
-      const result = await authService.createUser(testUser.email, testUser.password);
+      const result = await authService.createUser(
+        testUsers.validUser.email, 
+        testUsers.validUser.password
+      );
       
       expect(result.success).toBe(false);
       expect(result.error).toBe('USER_EXISTS');

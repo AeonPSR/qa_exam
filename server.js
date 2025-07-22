@@ -39,11 +39,11 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.post('/login', authController.login);
-app.post('/register', authController.register); // Helper route for testing
+app.post('/api/login', authController.login);
+app.post('/api/register', authController.register); // Helper route for testing
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
