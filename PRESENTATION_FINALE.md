@@ -20,7 +20,7 @@ Frontend (Next.js)     ←→     Backend API (Node.js)     ←→     Base de D
 
 ---
 
-## ⚙️ Fonctionnalité Développée : Système de Connexion
+## ⚙️ Système de Connexion
 
 ### 🔧 Backend - API `/api/login`
 
