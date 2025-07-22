@@ -660,21 +660,6 @@ This project demonstrates:
 ## 👥 Contributors
 ---
 
-## 🌐 End-to-End (E2E) Testing with Cypress
-
-### Overview
-
-End-to-End tests simulate **real user scenarios** in a complete browser environment, testing the entire application stack together (Frontend + Backend + Database).
-
-### What E2E Tests Verify
-
-Unlike Unit and Integration tests, E2E tests verify:
-- **Real browser rendering** and user interactions
-- **Actual API communication** between frontend and backend
-- **Database integration** with real data persistence
-- **Complete user workflows** from start to finish
-- **Cross-browser compatibility** and responsive design
-
 ### Test Scenarios Implemented
 
 #### ✅ **Complete Login Workflow**
