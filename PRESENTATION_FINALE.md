@@ -1,5 +1,3 @@
-# PARTIE 10 - Présentation Finale
-
 ## 📋 Informations du Projet
 
 **Titre du projet :** Application de Connexion Full-Stack avec Suite de Tests Complète   
