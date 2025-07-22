@@ -657,7 +657,6 @@ This project demonstrates:
 5. **DevOps**: CI/CD pipeline with automated testing
 6. **Documentation**: Clear project documentation
 
-## 👥 Contributors
 ---
 
 ### Test Scenarios Implemented
@@ -731,15 +730,3 @@ E2E tests catch issues that Unit and Integration tests miss:
 | Frontend Unit | Jest + React Testing Library | 14/14 ✅ | Component Logic |
 | **Frontend E2E** | **Cypress** | **15/15 ✅** | **Full User Journey** |
 | **TOTAL** | **All Frameworks** | **71/71 ✅** | **Complete Application** |
-
----
-
-## 🎓 Educational Information
-
-- **Student**: [Your Name]
-- **Course**: Quality Assurance
-- **Institution**: [Your School]
-
-## 📄 License
-
-This project is for educational purposes only.
