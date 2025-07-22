@@ -3,6 +3,8 @@ node_modules/
 .env.local
 .env.production
 .env.test.local
+*/.next/
+frontend/.next/*
 
 # Logs
 logs
