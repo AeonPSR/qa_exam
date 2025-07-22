@@ -9,43 +9,6 @@
 
 ## 🏗️ Architecture du Projet
 
-```mermaid
-graph TB
-    subgraph "Frontend - Next.js"
-        A[Pages Next.js] --> B[Composants React]
-        B --> C[Formulaire de Connexion]
-        C --> D[Gestion d'État React]
-    end
-    
-    subgraph "API Backend - Node.js"
-        E[Express.js Server] --> F[Routes API]
-        F --> G[Controllers]
-        G --> H[Services Métier]
-        H --> I[Modèles MongoDB]
-    end
-    
-    subgraph "Base de Données"
-        J[MongoDB Atlas]
-        K[Collection Users]
-    end
-    
-    subgraph "Tests"
-        L[Tests Unitaires Jest]
-        M[Tests Intégration Supertest]
-        N[Tests E2E Cypress]
-    end
-    
-    A -.->|API Calls| E
-    H -.->|CRUD| J
-    I -.->|Schema| K
-    
-    L -.->|Test| H
-    M -.->|Test| F
-    N -.->|Test| A
-```
-
-### Schéma de l'Architecture
-
 ```
 Frontend (Next.js)     ←→     Backend API (Node.js)     ←→     Base de Données
 ─────────────────             ──────────────────             ─────────────────
